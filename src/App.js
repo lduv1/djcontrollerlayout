@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Board from './components/Board';
+import { isFirefox, isMobile } from 'react-device-detect';
+import styled from '@emotion/styled/macro';
+
+const Main = styled.div`
+    padding: 10vh 10vw;
+    h2{
+      text-align: center;
+      margin: auto;
+    }
+    button{
+      display: block;
+      height: 4rem;
+      width: auto;
+      margin: 4rem auto;
+      background-color: lightblue;
+      border-radius: 4px;
+    }
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [accepted, setAccepted] = useState(false);
+
+  // return (
+  //   <Board />
+  // )
+  return (accepted || (isFirefox && !isMobile))?
+      <Board/> :
+      (<Main>
+        <h2>This page is designed to be viewed in Firefox on desktop and uses features that may not display correctly in other browsers</h2>
+        <button onClick={() => setAccepted(true)}><h3>I understand and wish to continue</h3></button>
+      </Main>)
+  ;
 }
 
 export default App;
